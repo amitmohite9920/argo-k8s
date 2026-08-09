@@ -6,24 +6,54 @@ metadata:
     app: springboot-app
 spec:
   replicas: 2
+
   selector:
     matchLabels:
       app: springboot-app
+
   template:
     metadata:
       labels:
         app: springboot-app
+
     spec:
       containers:
         - name: springboot-app
+
           image: amitmohite99/springboot-app:75
+
           imagePullPolicy: Always
+
           ports:
             - containerPort: 8080
+
+          env:
+            - name: DB_HOST
+              value: mysql
+
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE
+
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+
           resources:
             requests:
               cpu: 100m
               memory: 256Mi
+
             limits:
               cpu: 500m
               memory: 512Mi
