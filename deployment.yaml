@@ -20,7 +20,7 @@ spec:
       containers:
         - name: springboot-app
 
-          image: amitmohite99/springboot-app:77
+          image: amitmohite99/springboot-app:78
 
           imagePullPolicy: Always
 
